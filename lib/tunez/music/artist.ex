@@ -5,4 +5,37 @@ defmodule Tunez.Music.Artist do
     table "artists"
     repo Tunez.Repo
   end
+
+  actions do
+    # create :create do
+    #   accept [:name, :biography]
+    # end
+
+    # read :read do
+    #   primary? true
+    # end
+
+    # update :update do
+    #   accept [:name, :biography]
+    # end
+
+    # destroy :destroy do
+    # end
+
+    defaults [:read, :destroy, :create, update: [:name, :biography]]
+    default_accept [:name, :biography]
+  end
+
+  attributes do
+    uuid_v7_primary_key :id
+
+    attribute :name, :string do
+      allow_nil? false
+    end
+
+    attribute :biography, :string
+
+    create_timestamp :inserted_at
+    update_timestamp :updated_at
+  end
 end
