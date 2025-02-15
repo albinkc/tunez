@@ -8,8 +8,14 @@ defmodule Tunez.Music.Artist do
 
   actions do
     # defaults [:read, :destroy, :create, update: [:name, :biography]]
-    defaults [:read, :destroy, :create, :update]
+    defaults [:read, :destroy, :create]
     default_accept [:name, :biography]
+
+    update :update do
+      require_atomic? false
+      accept [:name, :biography]
+      change Tunez.Music.Changes.UpdatePreviousNames, where: [changing(:name)]
+    end
   end
 
   attributes do
@@ -20,6 +26,10 @@ defmodule Tunez.Music.Artist do
     end
 
     attribute :biography, :string
+
+    attribute :previous_names, {:array, :string} do
+      default []
+    end
 
     create_timestamp :inserted_at
     update_timestamp :updated_at
