@@ -9,6 +9,8 @@ defmodule TunezWeb.Endpoint do
     key: "_tunez_key",
     signing_salt: "uvB+sUK/",
     same_site: "Lax"
+    # WARNING: INSECURE - DEV only
+    # same_site: "None", secure: true
   ]
 
   socket "/live", Phoenix.LiveView.Socket,

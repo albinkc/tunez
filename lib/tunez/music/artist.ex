@@ -7,22 +7,8 @@ defmodule Tunez.Music.Artist do
   end
 
   actions do
-    # create :create do
-    #   accept [:name, :biography]
-    # end
-
-    # read :read do
-    #   primary? true
-    # end
-
-    # update :update do
-    #   accept [:name, :biography]
-    # end
-
-    # destroy :destroy do
-    # end
-
-    defaults [:read, :destroy, :create, update: [:name, :biography]]
+    # defaults [:read, :destroy, :create, update: [:name, :biography]]
+    defaults [:read, :destroy, :create, :update]
     default_accept [:name, :biography]
   end
 
@@ -37,5 +23,9 @@ defmodule Tunez.Music.Artist do
 
     create_timestamp :inserted_at
     update_timestamp :updated_at
+  end
+
+  relationships do
+    has_many :albums, Tunez.Music.Album
   end
 end
