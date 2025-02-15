@@ -19,9 +19,9 @@ defmodule Tunez.Music.Album do
     ]
   end
 
-  preparations do
-    prepare build(sort: [year_released: :desc])
-  end
+  # preparations do
+  #   prepare build(sort: [year_released: :desc])
+  # end
 
   validations do
     validate numericality(:year_released,
