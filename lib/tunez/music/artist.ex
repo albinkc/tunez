@@ -66,7 +66,7 @@ defmodule Tunez.Music.Artist do
 
   aggregates do
     count :album_count, :albums
-    first :lastest_album_year_released, :albums, :year_released
+    first :latest_album_year_released, :albums, :year_released
     first :cover_image_url, :albums, :cover_image_url
   end
 end
