@@ -185,7 +185,12 @@ defmodule TunezWeb.Artists.IndexLive do
     [
       {"-updated_at", "recently updated"},
       {"-inserted_at", "recently added"},
-      {"name", "name"}
+      {"name", "name"},
+      {"-album_count", "number of albums"},
+
+      # “-- is a bit special - case it’ll put any nil values
+      # (if an artist hasn’t released any albums!) at the end of the list”
+      {"--latest_album_year_released", "latest album release"}
     ]
   end
 
