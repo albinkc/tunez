@@ -49,10 +49,13 @@ defmodule Tunez.Music.Artist do
       public? true
     end
 
-    attribute :biography, :string
+    attribute :biography, :string do
+      public? true
+    end
 
     attribute :previous_names, {:array, :string} do
       default []
+      public? true
     end
 
     create_timestamp :inserted_at, public?: true
