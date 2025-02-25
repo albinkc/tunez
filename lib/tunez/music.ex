@@ -3,6 +3,18 @@ defmodule Tunez.Music do
     extensions: [AshJsonApi.Domain, AshPhoenix],
     otp_app: :tunez
 
+  json_api do
+    routes do
+      base_route "/artists", Tunez.Music.Artist do
+        get :read
+        index :search
+        post :create
+        patch :update
+        delete :destroy
+      end
+    end
+  end
+
   resources do
     resource Tunez.Music.Artist do
       define :create_artist, action: :create
