@@ -70,7 +70,7 @@ defmodule TunezWeb.Router do
     forward "/swaggerui",
             OpenApiSpex.Plug.SwaggerUI,
             path: "/api/json/open_api",
-            default_model_expand_depth: 4
+            default_model_expand_depth: :Infinity
 
     forward "/", TunezWeb.AshJsonApiRouter
   end
