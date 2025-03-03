@@ -3,7 +3,7 @@ defmodule Tunez.Accounts.User do
     otp_app: :tunez,
     domain: Tunez.Accounts,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshJsonApi.Resource, AshAuthentication],
+    extensions: [AshGraphql.Resource, AshJsonApi.Resource, AshAuthentication],
     data_layer: AshPostgres.DataLayer
 
   authentication do
@@ -48,6 +48,10 @@ defmodule Tunez.Accounts.User do
         sender Tunez.Accounts.User.Senders.SendMagicLinkEmail
       end
     end
+  end
+
+  graphql do
+    type :user
   end
 
   json_api do

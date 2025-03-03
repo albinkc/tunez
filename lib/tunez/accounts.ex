@@ -1,7 +1,20 @@
 defmodule Tunez.Accounts do
   use Ash.Domain,
     otp_app: :tunez,
-    extensions: [AshJsonApi.Domain]
+    extensions: [AshGraphql.Domain, AshJsonApi.Domain]
+
+  graphql do
+    queries do
+      get Tunez.Accounts.User, :sign_in_with_password, :sign_in_with_password do
+        identity false
+        type_name :user_with_token
+      end
+    end
+
+    mutations do
+      create Tunez.Accounts.User, :register_with_password, :register_with_password
+    end
+  end
 
   json_api do
     routes do
