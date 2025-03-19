@@ -150,10 +150,11 @@ defmodule TunezWeb.Artists.IndexLive do
   def search_box(assigns) do
     ~H"""
     <form class="relative w-fit inline-block" {@rest}>
-      <.icon name="hero-magnifying-glass" class="w-4 h-4 m-2 ml-3 absolute bg-base-content/50" />
+      <.icon name="hero-magnifying-glass"
+        class="w-4 h-4 m-2 ml-3 mt-4 absolute bg-gray-400" />
       <label for="search-text" class="hidden">Search</label>
-      <input
-        class="input input-bordered rounded-full input-sm pl-8 w-32 sm:w-48"
+      <.input
+        class="!rounded-full p-1 pl-8 !w-32 sm:!w-48"
         name="query"
         id="search-text"
         value={@query}
@@ -167,36 +168,36 @@ defmodule TunezWeb.Artists.IndexLive do
     assigns = assign(assigns, :options, sort_options())
 
     ~H"""
-    <form data-role="artist-sort" class="hidden sm:inline" phx-change="change_sort">
-      <label for="sort_by" class="text-sm">sort by:</label>
-      <select class="select select-bordered select-sm py-0 w-fit" name="sort_by" id="sort_by">
-        <option
-          :for={{value, text} <- @options}
-          value={value}
-          {if @selected == value, do: [selected: true], else: []}
-        >
-          {text}
-        </option>
-      </select>
+    <form data-role="artist-sort" class="hidden sm:inline" phx-change="change-sort">
+      <.input
+        label="sort by:"
+        type="select"
+        id="sort_by"
+        name="sort_by"
+        options={@options}
+        value={@selected}
+        class="px-2 py-0.5 !w-fit !inline-block pr-8 text-sm"
+        container_class="!inline-block"
+      />
     </form>
     """
   end
 
   defp sort_options do
     [
-      {"-updated_at", "recently updated"},
-      {"-inserted_at", "recently added"},
+      {"recently updated", "-updated_at"},
+      {"recently added", "-inserted_at"},
       {"name", "name"},
-      {"-album_count", "number of albums"},
+      {"number of albums", "-album_count"},
 
       # “-- is a bit special - case it’ll put any nil values
       # (if an artist hasn’t released any albums!) at the end of the list”
-      {"--latest_album_year_released", "latest album release"}
+      {"latest album release", "--latest_album_year_released"}
     ]
   end
 
   def validate_sort_by(key) do
-    valid_keys = Enum.map(sort_options(), &elem(&1, 0))
+    valid_keys = Enum.map(sort_options(), &elem(&1, 1))
 
     if key in valid_keys do
       key
@@ -209,7 +210,7 @@ defmodule TunezWeb.Artists.IndexLive do
     Enum.filter(params, fn {_key, val} -> val != "" end)
   end
 
-  def handle_event("change_sort", %{"sort_by" => sort_by}, socket) do
+  def handle_event("change-sort", %{"sort_by" => sort_by}, socket) do
     params = remove_empty(%{q: socket.assigns.query_text, sort_by: sort_by})
     {:noreply, push_patch(socket, to: ~p"/?#{params}")}
   end
